@@ -10,8 +10,11 @@ let win;
 
 function createWindow() {
   // Create the browser window.
-  win = new BrowserWindow({width: 800, height: 600});
-  win.maximize();
+   let win = new BrowserWindow({backgroundColor: '#2e2c29',show: false})
+	win.once('ready-to-show', () => {
+		win.show();
+		win.maximize();
+	})
 
   // and load the index.html of the app.
   win.loadURL(`file://${__dirname}/index.html`);
