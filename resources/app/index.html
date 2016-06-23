@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	
+	<title>Invoice Manager</title>
+	
+	<!-- Insert this line above script imports  -->
+	<script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
+
+	<!-- JS -->
+	<script src="./Invoice Manager_files/jquery-1.11.1.min.js"></script>
+	<script src="./Invoice Manager_files/moment.js"></script>
+	<script src="./Invoice Manager_files/bootstrap.min.js"></script>
+	<script src="./Invoice Manager_files/jquery.dataTables.js"></script>
+	<script src="./Invoice Manager_files/dataTables.bootstrap.js"></script>
+	<script src="./Invoice Manager_files/bootstrap.datetime.js"></script>
+	<script src="./Invoice Manager_files/bootstrap.password.js"></script>
+	<script src="./Invoice Manager_files/scripts.js"></script>  
+
+	<!-- Insert this line after script imports -->
+	<script>if (window.module) module = window.module;</script>
+
+
+	<!-- CSS -->
+	<link rel="stylesheet" href="./Invoice Manager_files/bootstrap.min.css">
+	<link rel="stylesheet" href="./Invoice Manager_files/bootstrap.datetimepicker.css">
+	<link rel="stylesheet" href="./Invoice Manager_files/jquery.dataTables.css">
+	<link rel="stylesheet" href="./Invoice Manager_files/dataTables.bootstrap.css">
+	<link rel="stylesheet" href="./Invoice Manager_files/styles.css">
+
+	<!---<style>
+		@import url(http://fonts.googleapis.com/css?family=Open+Sans:400,700);
+		body, h1, h2, h3, h4, h5, h6{
+			font-family: 'Open Sans', sans-serif;
+		}
+	</style>-->
+
+</head>
+
+<body>
+	<div class="container">
+
+
+		<div class="top-buttons btn-group">
+			<img src="./Invoice Manager_files/logo.jpg" class="img-responsive">
+			<p>Kaloor P.O Kaloorkkadu - 686668<br>
+			Muvattupuzha, Ernakulam Dist, Kerala<br>
+			Contact: 9446010630, 04862267229, jossykochukudy@yahoo.co.in</p>
+		</div>
+
+		<h1 id="main_title">Create Invoice</h1>
+		<hr>
+
+		<div id="response" class="alert alert-success" style="display:none;">
+			<a href="#" class="close" data-dismiss="alert">×</a>
+			<div class="message"></div>
+		</div>
+
+		<form method="post" id="create_invoice">
+			<input type="hidden" name="action" value="create_invoice">
+			
+			<div class="row">
+				<div class="col-xs-5">
+					<h1>
+						
+					</h1>
+				</div>
+				<div class="col-xs-7 text-right">
+					<div class="row">
+						
+						<div class="col-xs-6">
+							<h1 class="invoice_type" id="invoice">INVOICE</h1>
+							<h4 class="print-preview" id="print-invoice-status"></h4>
+						</div>
+						<div class="col-xs-3">
+							<select name="invoice_type" id="invoice_type" class="form-control">
+								<option value="invoice" selected="">Invoice</option>
+								<option value="quote">Quote</option>
+								<option value="receipt">Receipt</option>
+							</select>
+						
+						</div>
+						<div class="col-xs-3">
+							<select name="invoice_status" id="invoice_status" class="form-control">
+								<option value="Advance" selected="">Advance</option>
+								<option value="Paid">Paid</option>
+							</select>
+						</div>
+						<div class="date-class">
+							<span class="print-pre text-left">Date: </span><span class="print-preview text-left" id="print-invoice-date"></span>
+							<p class="print-pre text-right">Due Date: </span><span class="print-preview text-right" id="print-invoice-due-date"></p>
+
+					</div>
+					</div>
+					<div class="col-xs-4 no-padding-right">
+				        <div class="form-group">
+				            <div class="input-group date" id="invoice_date">
+				                <input type="text" class="form-control required" name="invoice_date" placeholder="Select invoice date" data-date-format="DD/MM/YYYY">
+				                <span class="input-group-addon">
+				                    <span class="glyphicon glyphicon-calendar"></span>
+				                </span>
+
+				            </div>
+				        </div>
+				    </div>
+				    <div class="col-xs-4">
+				        <div class="form-group">
+				            <div class="input-group date" id="invoice_due_date">
+				                <input type="text" class="form-control" id="date-preview" name="invoice_due_date" placeholder="Select due date" data-date-format="DD/MM/YYYY">
+				                <span class="input-group-addon">
+				                    <span class="glyphicon glyphicon-calendar"></span>
+				                </span>
+
+				            </div>
+				        </div>
+				    </div>
+					<div class="input-group col-xs-4 float-right">
+						<span class="input-group-addon">#S</span>
+						<input type="text" name="invoice_id" id="invoice_id" class="form-control required" placeholder="Invoice Number" aria-describedby="sizing-addon1" value="1001">
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-6">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h4 class="float-left">Customer Information</h4>
+							
+							<div class="clear"></div>
+						</div>
+						<div class="panel-body form-group form-group-sm">
+							<div class="row">
+								<div class="col-xs-6">
+									<div class="form-group">
+										<input type="text" class="form-control margin-bottom copy-input required" name="customer_name" id="customer_name" placeholder="Enter name" tabindex="1">
+										<span class="print-pre">Name:  </span>
+									</div>
+									<div class="form-group">
+										<input type="text" class="form-control margin-bottom copy-input required" name="customer_address_1" id="customer_address_1" placeholder="Address 1" tabindex="3">	
+										<span class="print-pre">Address:  </span>
+									</div>
+									<div class="form-group">
+										<input type="text" class="form-control margin-bottom copy-input required" name="customer_town" id="customer_town" placeholder="Town" tabindex="5">	
+									</div>
+									<div class="form-group no-margin-bottom">
+										<input type="text" class="form-control copy-input required" name="customer_postcode" id="customer_postcode" placeholder="Postcode" tabindex="7">					
+										
+									</div>
+									
+								</div>
+								<div class="col-xs-6">
+									<div class="input-group float-right margin-bottom">
+										<span class="print-preview" id="print-name"></span>
+										<span class="input-group-addon">@</span>
+										<input type="email" class="form-control copy-input" name="customer_email" id="customer_email" placeholder="E-mail address" aria-describedby="sizing-addon1" tabindex="2">
+									</div>
+								    <div class="form-group">
+								    	<input type="text" class="form-control margin-bottom copy-input" name="customer_address_2" id="customer_address_2" placeholder="Address 2" tabindex="4">
+										<span class="print-preview" id="print-address"></span>	
+									</div>
+								    <div class="form-group">
+								    	<input type="text" class="form-control margin-bottom copy-input" name="customer_county" id="customer_county" placeholder="State" tabindex="6">
+										
+									</div>
+								    <div class="form-group no-margin-bottom">
+								    	<input type="text" class="form-control" name="customer_phone" id="customer_phone" placeholder="Phone number" tabindex="8">
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-xs-6">
+									<div>
+										<span class="print-pre">Phone: </span>
+									</div>
+									<div>
+										<span class="print-pre">Email: <span>
+									</div>
+								</div>
+								<div class="col-xs-6">
+									<div>
+										<span class="print-preview" id="print-phone"></span>
+									</div>
+									<div>
+										<span class="print-preview" id="print-email"></span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-xs-6 text-right">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h4>Shipping Information</h4>
+						</div>
+						<div class="panel-body form-group form-group-sm">
+							<div class="row">
+								<div class="col-xs-6">
+									<div class="form-group">
+										<input type="text" class="form-control margin-bottom required" name="customer_name_ship" id="customer_name_ship" placeholder="Enter name" tabindex="9">
+										<span class="print-pre">Name:  </span>
+									</div>
+									<div class="form-group">
+										<input type="text" class="form-control margin-bottom" name="customer_address_2_ship" id="customer_address_2_ship" placeholder="Address 2" tabindex="11">	
+										<span class="print-pre">Address:  </span>
+									</div>
+									<div class="form-group no-margin-bottom">
+										<input type="text" class="form-control" name="customer_county_ship" id="customer_county_ship" placeholder="State" tabindex="13">
+									</div>
+								</div>
+								<div class="col-xs-6">
+									<div class="form-group">
+								    	<input type="text" class="form-control margin-bottom required" name="customer_address_1_ship" id="customer_address_1_ship" placeholder="Address 1" tabindex="10">
+										<span class="print-preview" id="print-name-ship"></span>
+									</div>
+									<div class="form-group">
+										<input type="text" class="form-control margin-bottom required" name="customer_town_ship" id="customer_town_ship" placeholder="Town" tabindex="12">							
+										<span class="print-preview" id="print-address-ship"></span>
+									</div>
+								    <div class="form-group no-margin-bottom">
+								    	<input type="text" class="form-control required" name="customer_postcode_ship" id="customer_postcode_ship" placeholder="Postcode" tabindex="14">
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- / end client details section -->
+			<table class="table table-bordered" id="invoice_table">
+				<thead>
+					<tr>
+						<th width="500">
+							<h4><a href="#" class="btn btn-success btn-xs add-row"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a> Item</h4>
+						</th>
+						<th>
+							<h4>Qty</h4>
+						</th>
+						<th width="150">
+							<h4>Price</h4>
+						</th>
+						<th width="150">
+							<h4>Discount</h4>
+						</th>
+						<th>
+							<h4>Sub Total</h4>
+						</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>
+							<div class="form-group form-group-sm  no-margin-bottom">
+								<a href="#" class="btn btn-danger btn-xs delete-row"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+								<input type="text" class="form-control form-group-sm item-input invoice_product" name="invoice_product[]" placeholder="Enter item title and / or description">
+								<span class="print-preview" name="product-name-place[]">0.0</span>
+
+								
+							</div>
+						</td>
+						<td class="text-right">
+							<div class="form-group form-group-sm no-margin-bottom">
+								<input type="number" class="form-control invoice_product_qty calculate" name="invoice_product_qty[]" value="1">
+								<span class="print-preview" name="product-qty-place[]">0.0</span>
+
+							</div>
+						</td>
+						<td class="text-right">
+							<div class="input-group input-group-sm  no-margin-bottom">
+								<span class="input-group-addon">₹</span>
+								<input type="number" class="form-control calculate invoice_product_price required" name="invoice_product_price[]" aria-describedby="sizing-addon1" placeholder="0.00">
+								<span class="print-pre">₹</span><span class="print-preview" name="product-price-place[]">0.0</span>
+
+							</div>
+						</td>
+						<td class="text-right">
+							<div class="form-group form-group-sm  no-margin-bottom">
+								<input type="text" class="form-control calculate" name="invoice_product_discount[]" placeholder="Enter % or value">
+								<span class="print-pre">₹</span><span class="print-preview" name="product-disc-place[]">0.0</span>
+
+							</div>
+						</td>
+						<td class="text-right">
+							<div class="input-group input-group-sm">
+								<span class="input-group-addon">₹</span>
+								<input type="text" class="form-control calculate-sub" name="invoice_product_sub[]" id="invoice_product_sub" value="0.00" aria-describedby="sizing-addon1" disabled="">
+								<span class="print-pre">₹</span><span class="print-preview" name="product-sub-place[]">0.0</span>
+
+							</div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<div id="invoice_totals" class="padding-right row text-right">
+				<div class="col-xs-6">
+					<div class="input-group form-group-sm textarea no-margin-bottom">
+						<textarea name="invoice_notes" placeholder="Please enter any order notes here."></textarea>
+					</div>
+				</div>
+				<div class="col-xs-6 no-padding-right">
+					<div class="row">
+						<div class="col-xs-4 col-xs-offset-5">
+							<strong>Sub Total:</strong>
+						</div>
+						<div class="col-xs-3">
+							₹<span class="invoice-sub-total">0.00</span>
+							<input type="hidden" name="invoice_subtotal" id="invoice_subtotal" value="0.00">
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-4 col-xs-offset-5">
+							<strong>Discount:</strong>
+						</div>
+						<div class="col-xs-3">
+							₹<span class="invoice-discount">0.00</span>
+							<input type="hidden" name="invoice_discount" id="invoice_discount" value="0.00">
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-4 col-xs-offset-5">
+							<span><strong class="shipping">Advance:</strong></span>
+						</div>
+						<div class="col-xs-3">
+							<div class="input-group input-group-sm">
+								<span class="input-group-addon">₹</span>
+								<input type="text" class="form-control calculate shipping" name="invoice_shipping" aria-describedby="sizing-addon1" placeholder="0.00">
+								<span class="print-pre">₹</span><span class="print-preview" id="product-advance">0.0</span>
+							</div>
+						</div>
+					</div>
+										<div class="row">
+						<div class="col-xs-4 col-xs-offset-5">
+							<strong>Total:</strong>
+						</div>
+						<div class="col-xs-3">
+							₹<span class="invoice-total">0.00</span>
+							<input type="hidden" name="invoice_total" id="invoice_total" value="0.00">
+						</div>
+					</div>
+					
+				</div>
+
+			</div>
+			<div class="row">
+				<div class="col-xs-12 margin-top btn-group">
+					<input type="submit" id="action_create_invoice" class="btn btn-success float-right" value="Create Invoice" data-loading-text="Creating...">
+				</div>
+			</div>
+		</form>	
+
+	</div>
+	<footer>
+		<br>
+		<h5><strong>Terms and Conditions</strong></h5>
+		<h6>1. Advance amount paid will not be refunded. 2. Any complaints regarding the advance amount paid to Kochukudy Nutmegs have to be filed within Thodupuzha Jurisdiction</h6>
+	</footer>		
+
+</body></html>

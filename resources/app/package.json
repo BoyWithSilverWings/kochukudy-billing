@@ -1,0 +1,8 @@
+{
+  "name"    : "Billing App",
+  "version" : "0.1.0",
+  "main"    : "main.js",
+  "author" : "Boy With Silver Wings",
+  "description": "Build on Electron",
+  "productName": "Invoice Manager"
+}
